@@ -1,24 +1,3 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This template is made by `rails new course-simulator --skip-test --javascript=esbuild --css=tailwind --skip-hotwire`, and it has set most of the configurations, including RSpec, Cucumber, and Rubocop......so you can fork this repository and begin your work immediately.
