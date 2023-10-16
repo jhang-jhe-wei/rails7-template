@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 When('I visit {string}') do |url|
   visit url
 end

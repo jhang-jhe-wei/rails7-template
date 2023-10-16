@@ -7,11 +7,14 @@ on:
         default: '3.1.4'
         type: string
       node-version:
-        default: '14'
+        default: '16'
         type: string
 
 env:
   RAILS_ENV: test
+  DATABASE_URL: "postgres://postgres:postgres@localhost:5432/ntust_sport_registration_test"
+  ADMIN_NAME: admin
+  ADMIN_PASSWORD: password
 
 permissions:
   contents: read
@@ -21,6 +24,16 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
     - name: Checkout
@@ -43,12 +56,17 @@ jobs:
         bundle install
         yarn install
 
-    - uses: nanasess/setup-chromedriver@v1
+    - uses: browser-actions/setup-chrome@v1
+    - run: chrome --version
+    - uses: nanasess/setup-chromedriver@master
+    - run: chromedriver --version
 
     - name: Prepare
       run: |
         bundle exec rake db:test:prepare
         bundle exec rake db:migrate
+        yarn run build
+        yarn run build:css
 
     - name: Run Rspec
       run: bundle exec rspec

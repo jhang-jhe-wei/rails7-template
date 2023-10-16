@@ -74,5 +74,5 @@ group :development do
   # gem "spring"
 end
 gem 'escompress'
-gem 'react-rails', '~> 2.6'
 gem 'pg'
+gem 'react-rails', '~> 2.6'

@@ -13,6 +13,32 @@ jobs:
     name: Test
     uses: ./.github/workflows/test-action.yml
 
+  Rubocop:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        command:
+          - rubocop
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.4
+          bundler-cache: true
+      - name: ${{ matrix.command }}
+        run: bundle exec ${{ matrix.command }}
+
+  # EsLint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Install modules
+  #       run: yarn install
+  #     - name: Run ESLint
+  #       run: yarn lint
+
   deploy:
     name: Deploy to dokku
     needs: test
@@ -27,15 +53,15 @@ jobs:
       - name: Push to dokku
         uses: dokku/github-action@master
         with:
-          git_remote_url: 'ssh://dokku@dokku.wells.tw:22/charity-web'
+          git_remote_url: 'ssh://deploy@deploy.com:22/project'
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           git_push_flags: --force -vvv
 
       - name: Run database migration
         uses: appleboy/ssh-action@v0.1.8
         with:
-          host: dokku.wells.tw
+          host: deploy.com
           username: dokku
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          script: run charity-web rails db:migrate
+          script: run project rails db:migrate
