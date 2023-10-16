@@ -58,3 +58,10 @@ World(FactoryBot::Syntax::Methods)
 Capybara.javascript_driver = :selenium_chrome_headless
 Capybara.default_max_wait_time = 1
 Capybara.default_driver = :selenium_chrome
+Capybara.configure do |config|
+  config.save_path = 'tmp/capybara'
+end
+
+After do |scenario|
+  save_screenshot if scenario.failed?
+end
