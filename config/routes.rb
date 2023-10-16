@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root to: redirect('/app')
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  scope :app, as: :app do
+    root to: 'frontends#app'
+    get '*path', to: 'frontends#app'
+  end
+
+  namespace :api do
+    resources :testes, only: [:index]
+  end
 end
