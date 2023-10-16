@@ -177,6 +177,7 @@ GEM
       reline (>= 0.3.1)
     diff-lcs (1.5.0)
     erubi (1.12.0)
+    escompress (0.3.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.2.0)
@@ -315,10 +316,6 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webdrivers (5.2.0)
-      nokogiri (~> 1.6)
-      rubyzip (>= 1.3.0)
-      selenium-webdriver (~> 4.0)
     webrick (1.7.0)
     websocket (1.2.9)
     websocket-driver (0.7.5)
@@ -330,6 +327,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-20
+  x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
@@ -339,6 +337,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   debug
+  escompress
   factory_bot_rails
   jbuilder
   jsbundling-rails
@@ -357,7 +356,6 @@ DEPENDENCIES
   sqlite3 (~> 1.4)
   tzinfo-data
   web-console
-  webdrivers
 
 RUBY VERSION
    ruby 3.1.4p223
