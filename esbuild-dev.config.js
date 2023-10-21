@@ -26,12 +26,17 @@ async function builder() {
       js: ' (() => new EventSource("http://localhost:8082").onmessage = () => location.reload())();'
     }
   })
+
   chokidar.watch(['./app/javascript/**/*.{js,ts,tsx,jsx}', './app/views/**/*.html.erb', './app/assets/stylesheets/*.css']).on('all', (event, path) => {
     if (path.includes('javascript')) {
-      result.rebuild()
+      result
+        .rebuild()
+        .then((rebuildResult) => {
+          clients.forEach((res) => res.write('data: update\n\n'))
+          clients.length = 0
+        })
+        .catch((e) => { console.error(e) })
     }
-    clients.forEach((res) => res.write('data: update\n\n'))
-    clients.length = 0
   })
 }
 builder()
